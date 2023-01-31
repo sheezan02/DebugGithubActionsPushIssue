@@ -1,0 +1,39 @@
+on:
+  push:
+    branches:
+      - develop
+      - main
+      - staging
+      
+ DeployToMain:
+    name: Deploy to production environment
+    if: github.ref == 'refs/heads/main'
+    env:
+      PROJECT: ${{ secrets.PROD_PROJECT }}
+      KEY: ${{ secrets.PROD_KEY }}
+      CMP_CONFIG: ${{ secrets.PROD_CMP_CONFIG }}
+      CMP_IMAGE: ${{ secrets.PROD_CMP_IMAGE }}
+      FUNCTION_NAME: help_cmp
+      CR_SA_NAME: staging-gitlab@staging-373707.iam.gserviceaccount.com
+      IMAGE: asia.gcr.io/staging-373707
+      VPC_CONNECTOR: test-vpc-connector
+      REGION: asia-south1
+      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+    
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: tag
+        run: |
+          echo $GITHUB_REPOSITORY
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}
+          echo "Build, tag the commit"
+          git remote -v
+          touch nofile.txt
+          git add .
+          git commit -m "test"
+          git push
