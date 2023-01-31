@@ -30,9 +30,8 @@ jobs:
     - name: tag
       run: |
         echo $GITHUB_REPOSITORY
-        git config --global user.email "sheezan02"
-        git config --global user.name "sheezanrasool@icloud.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git
+        git config --global user.email "actions@github.com"
+        git config --global user.name "Github Actions"
         echo "Build, tag the commit"
         git remote -v
         touch nofile.txt
