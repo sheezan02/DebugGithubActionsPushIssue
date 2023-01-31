@@ -30,6 +30,8 @@ jobs:
     - name: tag
       run: |
         echo $GITHUB_REPOSITORY
+        git config --global user.email "testing"
+        git config --global user.name "Bot"
         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}
         echo "Build, tag the commit"
         git remote -v
