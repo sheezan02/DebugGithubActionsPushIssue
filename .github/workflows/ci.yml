@@ -19,5 +19,6 @@ jobs:
         git remote -v
         git tag v1.9
         git push origin v1.9
+        echo "testing branch protection"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
