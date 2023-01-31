@@ -26,7 +26,9 @@ jobs:
     id-token: write
   steps:
     - uses: actions/checkout@v2
-
+      env:
+         ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+         tag: v1.6
     - name: tag
       run: |
         echo $GITHUB_REPOSITORY
@@ -34,7 +36,7 @@ jobs:
         git config --global user.name "Github Actions"
         echo "Build, tag the commit"
         git remote -v
-        touch nofile.txt
-        git add .
-        git commit -m "test"
-        git push
+        git tag $tag
+        git push origin $tag
+        
+      
