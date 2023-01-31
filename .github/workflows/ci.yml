@@ -15,8 +15,9 @@ jobs:
       run: |
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Actions"
+        git remote set-url origin https://github.com/$GITHUB_REPOSITORY
         git remote -v
-        git tag v1.5
-        git push origin v1.5
+        git tag v1.9
+        git push origin v1.9
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
