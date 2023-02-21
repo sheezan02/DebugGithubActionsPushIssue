@@ -1,24 +1,95 @@
+name: My Workflow
+
 on:
+  workflow_dispatch:
+    inputs:
+      commit-message:
+        description: 'Commit message'
+        required: true
+        default: 'email-fn'
   push:
-    branches:
+    branches: 
       - main
+      - staging
+      - develop
 
 jobs:
-  build:
+  my-job:
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: email-step
+        if: contains(github.event.head_commit.message, 'email-fn') || contains(github.event.inputs.commit-message, 'email-fn')
+        run: echo 'Hello, email-fn!'
+      - name: push-step
+        if: contains(github.event.head_commit.message, 'push-fn') || contains(github.event.inputs.commit-message, 'push-fn')
+        run: echo 'Hello, push-fn!'
+      - name: redis-step
+        if: contains(github.event.head_commit.message, 'redis-fn') || contains(github.event.inputs.commit-message, 'redis-fn')
+        run: echo 'Hello, redis-fn!'
+      - name: sms-step
+        if: contains(github.event.head_commit.message, 'sms-fn')
+        run: echo 'Hello, sms-fn!'
+   
+  my-job1:
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: email-step
+        if: contains(github.event.head_commit.message, 'email-fn') || contains(github.event.inputs.commit-message, 'email-fn')
+        run: echo 'Hello, email-fn!'
+      - name: push-step
+        if: contains(github.event.head_commit.message, 'push-fn') || contains(github.event.inputs.commit-message, 'push-fn')
+        run: echo 'Hello, push-fn!'
+      - name: redis-step
+        if: contains(github.event.head_commit.message, 'redis-fn') || contains(github.event.inputs.commit-message, 'redis-fn')
+        run: echo 'Hello, redis-fn!'
+      - name: sms-step
+        if: contains(github.event.head_commit.message, 'sms-fn')
+        run: echo 'Hello, sms-fn!'
+  
+  my-job2:
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: email-step
+        if: contains(github.event.head_commit.message, 'email-fn') || contains(github.event.inputs.commit-message, 'email-fn')
+        run: echo 'Hello, email-fn!'
+      - name: push-step
+        if: contains(github.event.head_commit.message, 'push-fn') || contains(github.event.inputs.commit-message, 'push-fn')
+        run: echo 'Hello, push-fn!'
+      - name: redis-step
+        if: contains(github.event.head_commit.message, 'redis-fn') || contains(github.event.inputs.commit-message, 'redis-fn')
+        run: echo 'Hello, redis-fn!'
+      - name: sms-step
+        if: contains(github.event.head_commit.message, 'sms-fn')
+        run: echo 'Hello, sms-fn!'
 
-    - name: Push changes
-      run: |
-        git config --global user.email "actions@github.com"
-        git config --global user.name "GitHub Actions"
-        git remote set-url origin https://github.com/$GITHUB_REPOSITORY
-        git remote -v
-        git tag v1.9
-        git push origin v1.9
-        echo "testing branch protection"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v2
+
+#     - name: Push changes
+#       run: |
+#         echo '${{ toJSON(github.event) }}'
+#         echo github.event
+#         git config --global user.email "actions@github.com"
+#         git config --global user.name "GitHub Actions"
+#         git remote set-url origin https://github.com/$GITHUB_REPOSITORY
+#         git remote -v
+#         git tag v1.9
+#         git push origin v2.0
+#         echo "testing branch protection"
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
