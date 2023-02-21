@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: email-step
-        if: contains(github.event.head_commit.message, 'email-fn')
+        if: contains(github.event.head_commit.message, 'email-fn') || contains(github.event.inputs.commit-message, 'email-fn')
         run: echo 'Hello, email-fn!'
       - name: push-step
         if: contains(github.event.head_commit.message, 'push-fn')
