@@ -62,7 +62,7 @@ jobs:
       - name: push-step
         if: contains(github.event.head_commit.message, 'push-fn') && contains(github.ref, 'main') || contains(github.event.inputs.commit-message, 'push-fn')
         run: echo 'Hello, push-fn!'
-       - name: redis-step
+      - name: redis-step
         if: contains(github.event.head_commit.message, 'redis-fn') && contains(github.ref, 'staging') || contains(github.event.inputs.commit-message, 'redis-fn')
         run: echo 'Hello, redis-fn!'
       - name: sms-step
